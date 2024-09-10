@@ -1,0 +1,27 @@
+<h2>دسته بندی محصولات</h2>
+<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+    {% for product_category in product_categories %}
+        <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a href="{% url 'product_categories_list' cat=product_category.url_title  %}">
+                    <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                        {{ product_category.title }}
+                </a>
+            </h4>
+        </div>
+        <div id="sportswear" class="panel-collapse collapse">
+            <div class="panel-body">
+                <ul>
+                    <li><a href="">محصول 1 </a></li>
+                    <li><a href="">محصول 2 </a></li>
+                    <li><a href="">محصول 3 </a></li>
+                    <li><a href="">محصول 4</a></li>
+                    <li><a href="">محصول 5</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div><!--/category-productsr-->

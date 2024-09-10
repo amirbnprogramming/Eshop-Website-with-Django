@@ -1,0 +1,38 @@
+{% extends 'shared/_layout.html' %}
+{% load render_partial %}
+{% load poll_extras %}
+{% block title %}سبد های خرید کاربر{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+            </div>
+            <div class="col-md-8">
+                {% if object_list %}
+                    <div class="alert alert-warning">لیست خرید های گذشته کاربر</div>
+                    <table class="table table-responsive table-hover table-striped">
+                        <tr>
+                            <th class="text-right"> شناسه فاکتور</th>
+                            <th class="text-right"> تاریخ تایید فاکتور</th>
+                            <th class="text-right"> قیمت نهایی فاکتور</th>
+                            <th class="text-right">دستورات</th>
+                        </tr>
+                        {% for order in object_list %}
+                            <tr>
+                                <td class="text-right">{{ order.id }}</td>
+                                <td class="text-right">{{ order.payment_date | showjalalidate }}</td>
+                                <td class="text-right">{{ order.get_order_total_price | three_digit_currency }}</td>
+                                <td class="text-right"><a class="btn btn-success" href="{% url 'user_past_cart_detail' order_id=order.id %}">جزئیات</a></td>
+
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <div class="alert alert-warning">شما سابقه ی خرید ندارید</div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

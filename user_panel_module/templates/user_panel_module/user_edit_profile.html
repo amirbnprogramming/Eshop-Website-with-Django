@@ -1,0 +1,26 @@
+{% extends 'shared/_layout.html' %}
+{% load render_partial %}
+{% block title %}ویرایش اطلاعات کاربری{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <a style="width: 360px" class="thumbnail center-block">
+                    {% if current_user.avatar %}
+                        <img style="width: 100%" src="{{ current_user.avatar.url }}" alt="تصویر فعلی کاربر">
+                    {% else %}
+                    	
+                    {% endif %} 
+                </a>
+                {% render_partial 'user_panel_module.views.user_panel_menu_component' %}
+            </div>
+            <div class="col-md-8">
+                <form enctype="multipart/form-data" action="{% url 'user_edit_profile' %}" method="post">
+                    {% csrf_token %}
+                    {{ edit_form.as_p }}
+                    <button type="submit" class="btn btn-primary pull-right">ثبت ویرایش</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% load thumbnail %}
+{% load sorl_thumbnail %}
+{% load poll_extras %}
+{% load render_partial %}
+
+<div class="col-sm-{{ col_size }}">
+    <div class="product-image-wrapper">
+        <div class="single-products">
+            <div class="productinfo text-center">
+                {% if product.image %}
+                    {% thumbnail product.image "268x250" quality=90 crop='center' as im %}
+                        <img src="{{ im.url }}">
+                    {% endthumbnail %}
+                {% else %}
+                    <img src="{{ product.image.url }}" alt=""/>
+                {% endif %}
+                <h2>{{ product.price | three_digit_currency }}</h2>
+                <p>{{ product.title |slice:'30' }}...</p>
+                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>add to cart</a>
+            </div>
+            <div class="product-overlay">
+                <div class="overlay-content">
+                <h2>{{ product.price | three_digit_currency }}</h2>
+                <p>{{ product.title |slice:'30' }}...</p>
+                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>add to cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="choose">
+            <ul class="nav nav-pills nav-justified">
+                <li><a href="{% url 'product-detail' slug=product.slug %}"><i class="fa fa-plus-square"></i>Detail</a>
+                </li>
+                <li><a href=""><i class="fa fa-plus-square"></i>Compare</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

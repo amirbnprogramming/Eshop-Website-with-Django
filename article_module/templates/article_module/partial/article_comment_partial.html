@@ -1,0 +1,84 @@
+{% load poll_extras %}
+{% load thumbnail %}
+
+<h2>نظرات ({{ comments_count }}) </h2>
+<ul class="media-list">
+    {% for comment in comments %}
+        {% if comment.articlecomment_set.all %}
+            <li class="media" id="single-comment-box-{{ comment.id }}">
+                <a class="pull-right" href="#">
+                    {% if comment.author.avatar %}
+                        {% thumbnail comment.author.avatar "121x100" crop="center" as im %}
+                            <img class="media-object" src="{{ im.url }}">
+                        {% endthumbnail %}
+                    {% else %}
+                        <img class="media-object" src="/static/images/blog/Customer.jpg" alt="تصویر نویسنده کامنت">
+                    {% endif %}
+                </a>
+                <div class="media-body">
+                    <ul class="sinlge-post-meta">
+                        <li><i class="fa fa-user"></i>{{ comment.author }}</li>
+                        <li>
+                            <i class="fa fa-clock-o"></i> {{ comment.create_time | showjalalidate }}
+                        </li>
+                        <li><i class="fa fa-calendar"></i>{{ comment.create_time | showtime }}
+                        </li>
+                    </ul>
+                    <p>{{ comment.comment_text }}</p>
+                    <a class="btn btn-primary" onclick="fillParentId({{ comment.id }})"><i class="fa fa-reply"></i>پاسـخ</a>
+                </div>
+            </li>
+            {% for subcomment in comment.articlecomment_set.all %}
+                <li class="media second-media" id="single-comment-box-{{ comment.id }}">
+                    <a class="pull-right" href="#">
+                        {% if subcomment.author.avatar %}
+                            {% thumbnail subcomment.author.avatar "121x100" crop="center" as im %}
+                                <img class="media-object" src="{{ im.url }}">
+                            {% endthumbnail %}
+                        {% else %}
+                            <img class="media-object" src="/static/images/blog/Customer.jpg"
+                                 alt="">
+                        {% endif %}
+                    </a>
+                    <div class="media-body">
+                        <ul class="sinlge-post-meta">
+                            <li><i class="fa fa-user"></i>{{ subcomment.author }}</li>
+                            <li>
+                                <i class="fa fa-clock-o"></i> {{ subcomment.create_time | showjalalidate }}
+                            </li>
+                            <li>
+                                <i class="fa fa-calendar"></i>{{ subcomment.create_time | showtime }}
+                            </li>
+                        </ul>
+                        <p>{{ subcomment.comment_text }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li class="media">
+
+                <a class="pull-right" href="#">
+                    {% if comment.author.avatar %}
+                        {% thumbnail comment.author.avatar "121x100" crop="center" as im %}
+                            <img class="media-object" src="{{ im.url }}">
+                        {% endthumbnail %}
+                    {% else %}
+                        <img class="media-object" src="/static/images/blog/Customer.jpg" alt="">
+                    {% endif %}
+                </a>
+                <div class="media-body">
+                    <ul class="sinlge-post-meta">
+                        <li><i class="fa fa-user"></i>{{ comment.author }}</li>
+                        <li>
+                            <i class="fa fa-clock-o"></i> {{ comment.create_time | showjalalidate }}
+                        </li>
+                        <li><i class="fa fa-calendar"></i>{{ comment.create_time | showtime }}
+                        </li>
+                    </ul>
+                    <p>{{ comment.comment_text }}</p>
+                    <a class="btn btn-primary" onclick="fillParentId({{ comment.id }})"><i class="fa fa-reply"></i>پاسـخ</a>
+                </div>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
